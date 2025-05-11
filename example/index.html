@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>RestAPI.js Example</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="../dist/restapi.js"></script>
+</head>
+<body>
+	<h1>RestAPI.js Demo</h1>
+
+	<form id="demo-form">
+		<input type="text" name="username" placeholder="Enter username"><br><br>
+		<input type="email" name="email" placeholder="Enter email"><br><br>
+		<button type="submit">Send via RestAPI.Send</button>
+	</form>
+
+	<hr>
+
+	<button onclick="testGet()">GET Request</button>
+	<button onclick="testPost()">POST Request</button>
+
+	<script>
+		document.getElementById('demo-form').addEventListener('submit', function(e) {
+			e.preventDefault();
+
+			RestAPI.Send('/fake-url', {
+				this: this,
+				customField: 'custom value'
+			}, function(status, data) {
+				console.log('Form Submitted:', status, data);
+			});
+		});
+
+		function testGet() {
+			RestAPI.Get('/fake-get-url', function(err, res) {
+				console.log('GET response:', err, res);
+			});
+		}
+
+		function testPost() {
+			RestAPI.Post('/fake-post-url', { key: 'value' }, function(err, res) {
+				console.log('POST response:', err, res);
+			});
+		}
+	</script>
+</body>
+</html>
